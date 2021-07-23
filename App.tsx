@@ -1,47 +1,54 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import firebase from "firebase/app";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, FlatList, SafeAreaView } from "react-native";
 import "firebase/firestore";
+// comonents
+import { ShopReviewItem } from "./src/components/ShopReviewItem";
 
-// firebaseのAPI keyを取得
-if (!firebase.apps.length) {
-  const firebaseConfig = {
-    apiKey: "AIzaSyC5GOdIsjenmG9cGTdrqfgl4zJTwko727A",
-    authDomain: "pre-food-app.firebaseapp.com",
-    projectId: "pre-food-app",
-    storageBucket: "pre-food-app.appspot.com",
-    messagingSenderId: "887086148314",
-    appId: "1:887086148314:web:8a861d7815245d8ef6d3e3",
-    measurementId: "G-4G8P36Z0VR",
-  };
-  firebase.initializeApp(firebaseConfig);
-}
+import { showCompletionScript } from "yargs";
+import { getShops } from "./src/lib/firebase";
+import { Shop } from "./src/types/shops";
 
-// typescriptなので方を定義
-type Shop = {
-  name: string;
-  place: string;
-};
 export default function App() {
-  const [shopws, setShops] = useState<Shop[]>([]);
+  const [shops, setShops] = useState<Shop[]>([]);
+  // useStateの後の<Shop>は型の定義。なくてもいいけどあった号がbetter
   useEffect(() => {
     getFirebaseItems();
   }, []);
 
   const getFirebaseItems = async () => {
-    const snapshot = await firebase.firestore().collection("shops").get();
-    const shops = snapshot.docs.map((doc) => doc.data());
+    const shops = await getShops();
+    setShops(shops);
     console.log(shops);
+
+    //テストコード
+    // const db = firebase.firestore();
+    // const querySnapshot = await db.collection("shops").get();
+
+    // const shop = querySnapshot.docs.map((doc) => doc.data());　//map関数を使ってdocs展開をして一つずつdataメソッドでデータのオブジェクトを取得
+    // console.log(shop);
+
+    // console.log(shopDocumentReference);
   };
 
+  const shopItems = shops.map((shop, index) => (
+    <ShopReviewItem shop={shop} key={index.toString()} />
+  ));
+  //これはもう使っていない下記のFlatListで表示している
+  //FlatListの方が早い
+
   return (
-    <View style={styles.container}>
-      <Text>my second app</Text>
-      <Text>my second app</Text>
-      <Text>my second app</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={shops}
+        renderItem={({ item }: { item: Shop }) => (
+          <ShopReviewItem shop={item} />
+        )}
+        keyExtractor={(item, index) => index.toString()}
+        numColumns={2}
+      />
+    </SafeAreaView>
   );
 }
 

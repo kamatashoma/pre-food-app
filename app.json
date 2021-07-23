@@ -13,9 +13,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -27,6 +25,17 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "firebase": {
+        "apiKey": "AIzaSyC5GOdIsjenmG9cGTdrqfgl4zJTwko727A",
+        "authDomain": "pre-food-app.firebaseapp.com",
+        "projectId": "pre-food-app",
+        "storageBucket": "pre-food-app.appspot.com",
+        "messagingSenderId": "887086148314",
+        "appId": "1:887086148314:web:8a861d7815245d8ef6d3e3",
+        "measurementId": "G-4G8P36Z0VR"
+      }
     }
   }
 }
