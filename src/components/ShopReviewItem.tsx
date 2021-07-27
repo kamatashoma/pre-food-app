@@ -19,6 +19,7 @@ export const ShopReviewItem: React.FC<Props> = ({ shop }: Props) => {
       <Image source={{ uri: imageUrl }} style={styles.image}></Image>
       <Text style={styles.nameText}>{name}</Text>
       <Text style={styles.placeText}>{place}</Text>
+      <Text style={styles.score}>{score}</Text>
       <Stars score={score} />
     </View>
   );
@@ -43,5 +44,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#888",
     marginTop: 8,
+  },
+  score: {
+    fontSize: 12,
+    color: "#888",
+    marginBottom: 8,
+    marginTop: 2,
   },
 });

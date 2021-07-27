@@ -10,7 +10,11 @@ if (!firebase.apps.length) {
 }
 
 export const getShops = async () => {
-  const snapshot = await firebase.firestore().collection("shops").get(); //DocumentSnapshotを取得　firebase.firestoreはdb　.colleciton()はコレクションへの参照
+  const snapshot = await firebase
+    .firestore()
+    .collection("shops")
+    .orderBy("score", "desc")
+    .get(); //DocumentSnapshotを取得　firebase.firestoreはdb　.colleciton()はコレクションへの参照
   const shops = snapshot.docs.map((doc) => doc.data() as Shop); //map関数を使ってdocs展開をして一つずつdataメソッドでデータのオブジェクトを取得
 
   return shops;
