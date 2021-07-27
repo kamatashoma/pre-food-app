@@ -9,8 +9,14 @@ import { ShopReviewItem } from "../components/ShopReviewItem";
 import { showCompletionScript } from "yargs";
 import { getShops } from "../lib/firebase";
 import { Shop } from "../types/shops";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../types/navigation";
 
-export const HomeScreen = ({ navigation }) => {
+type Props = {
+  navigation: StackNavigationProp<RootStackParamList, "Home">;
+};
+
+export const HomeScreen = ({ navigation }: Props) => {
   const [shops, setShops] = useState<Shop[]>([]);
   // useStateの後の<Shop>は型の定義。なくてもいいけどあった号がbetter
   useEffect(() => {
@@ -20,7 +26,6 @@ export const HomeScreen = ({ navigation }) => {
   const getFirebaseItems = async () => {
     const shops = await getShops();
     setShops(shops);
-    console.log(shops);
 
     //テストコード
     // const db = firebase.firestore();
@@ -38,8 +43,8 @@ export const HomeScreen = ({ navigation }) => {
   //これはもう使っていない下記のFlatListで表示している
   //FlatListの方が早い
 
-  const onPressShop = () => {
-    navigation.navigate("Shop");
+  const onPressShop = (shop: Shop) => {
+    navigation.navigate("Shop", { shop });
   };
 
   return (
@@ -47,7 +52,7 @@ export const HomeScreen = ({ navigation }) => {
       <FlatList
         data={shops}
         renderItem={({ item }: { item: Shop }) => (
-          <ShopReviewItem shop={item} onPress={onPressShop} />
+          <ShopReviewItem shop={item} onPress={() => onPressShop(item)} />
         )}
         keyExtractor={(item, index) => index.toString()}
         numColumns={2}
