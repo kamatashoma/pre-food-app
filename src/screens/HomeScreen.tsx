@@ -18,7 +18,7 @@ type Props = {
 
 export const HomeScreen = ({ navigation }: Props) => {
   const [shops, setShops] = useState<Shop[]>([]);
-  // useStateの後の<Shop>は型の定義。なくてもいいけどあった号がbetter
+  // useStateの後の<Shop>は型の定義。なくてもいいけどあったほうがbetter
   useEffect(() => {
     getFirebaseItems();
   }, []);
@@ -37,9 +37,6 @@ export const HomeScreen = ({ navigation }: Props) => {
     // console.log(shopDocumentReference);
   };
 
-  const shopItems = shops.map((shop, index) => (
-    <ShopReviewItem shop={shop} key={index.toString()} />
-  ));
   //これはもう使っていない下記のFlatListで表示している
   //FlatListの方が早い
 

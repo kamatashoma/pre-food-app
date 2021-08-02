@@ -1,12 +1,13 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { HomeScreen } from "./HomeScreen";
-import { HomeStackNavigator } from "../navigation/HomeStackNavigator";
-
+import { MainTabNavigator } from "../navigation/MainTabNavigator";
+/*screen*/
+import { AuthScreen } from "./AuthScreen";
 export const AppNavigator = () => {
+  const user = true;
   return (
     <NavigationContainer>
-      <HomeStackNavigator />
+      {!user ? <AuthScreen /> : <MainTabNavigator />}
     </NavigationContainer>
   );
 };

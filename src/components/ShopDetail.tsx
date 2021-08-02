@@ -21,9 +21,10 @@ export const ShopDetail: React.FC<Props> = ({ shop }: Props) => {
       <Image style={styles.image} source={{ uri: imageUrl }}></Image>
       <View>
         <Text style={styles.name}>{name}</Text>
-        <Text style={styles.place}>{place}</Text>
+        <Text style={styles.place}>場所：{place}</Text>
       </View>
       <Stars score={score} starSize={36} />
+      <Text>{score}</Text>
     </View>
   );
 };
