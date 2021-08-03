@@ -4,7 +4,7 @@ import { MainTabNavigator } from "../navigation/MainTabNavigator";
 /*screen*/
 import { AuthScreen } from "./AuthScreen";
 export const AppNavigator = () => {
-  const user = true;
+  const user = null;
   return (
     <NavigationContainer>
       {!user ? <AuthScreen /> : <MainTabNavigator />}

@@ -1,7 +1,9 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
+import "firebase/auth";
 import Constants from "expo-constants";
 import { Shop } from "../types/shops";
+import { initialUser, User } from "../types/user";
 //lib
 
 // firebaseのAPI keyを取得
@@ -28,3 +30,24 @@ export const getShops = async () => {
 // console.log(shop);
 
 // console.log(shopDocumentReference);
+
+export const signin = async () => {
+  const userCredintial = await firebase.auth().signInAnonymously(); //匿名ログイン
+  const { uid } = userCredintial.user;
+  const userDoc = await firebase.firestore().collection("users").doc(uid).get();
+  console.log(userDoc.data());
+  if (!userDoc.exists) {
+    //userDocに値がなかったら新たにセット
+    await firebase.firestore().collection("users").doc(uid).set(initialUser);
+    return {
+      ...initialUser,
+      id: uid,
+    } as User;
+  } else {
+    //値がある場合はそのまま展開してreturn
+    return {
+      id: uid,
+      ...userDoc.data(), //docmentのdataの中にはidがないので別でid:uidとして設定している
+    } as User;
+  }
+};

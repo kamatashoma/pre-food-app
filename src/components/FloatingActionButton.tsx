@@ -13,9 +13,6 @@ type Props = {
   onPress: (event: GestureResponderEvent) => void;
   iconName: any;
 };
-const CheckLog = () => {
-  console.log("a");
-};
 
 export const FloatingActionButton: React.FC<Props> = ({
   onPress,
@@ -24,7 +21,6 @@ export const FloatingActionButton: React.FC<Props> = ({
   return (
     <TouchableOpacity onPress={onPress}>
       <Feather name={iconName} color="#fff" size={30} />
-      <CheckLog />
     </TouchableOpacity>
   );
 };
