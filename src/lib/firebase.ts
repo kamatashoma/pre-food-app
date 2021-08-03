@@ -35,7 +35,6 @@ export const signin = async () => {
   const userCredintial = await firebase.auth().signInAnonymously(); //匿名ログイン
   const { uid } = userCredintial.user;
   const userDoc = await firebase.firestore().collection("users").doc(uid).get();
-  console.log(userDoc.data());
   if (!userDoc.exists) {
     //userDocに値がなかったら新たにセット
     await firebase.firestore().collection("users").doc(uid).set(initialUser);
